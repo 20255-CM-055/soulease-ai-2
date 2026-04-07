@@ -1,7 +1,7 @@
 flask
 flask-cors
 transformers
-torch
+torch==2.0.1
 pymongo
 requests
 openai-whisper
