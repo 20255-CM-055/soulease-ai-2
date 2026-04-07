@@ -1,0 +1,79 @@
+{
+  "uplift": {
+    "music": [
+      { "title": "Hopeful Piano Instrumental", "url": "https://www.youtube.com/watch?v=1ZYbU82GVz4" },
+      { "title": "Soft Healing Lofi", "url": "https://www.youtube.com/watch?v=DWcJFNfaw9c" },
+      { "title": "Emotional Cinematic Music", "url": "https://www.youtube.com/watch?v=4Tr0otuiQuU" },
+      { "title": "Gentle Acoustic Morning", "url": "https://www.youtube.com/watch?v=5qap5aO4i9A" },
+      { "title": "Peaceful Nature Sounds", "url": "https://www.youtube.com/watch?v=2OEL4P1Rz04" },
+      { "title": "Slow Healing Instrumental", "url": "https://www.youtube.com/watch?v=DWcJFNfaw9c" },
+      { "title": "Positive Vibes Playlist", "url": "https://www.youtube.com/watch?v=ZbZSe6N_BXs" }
+    ],
+    "exercise": [
+      { "title": "5-Minute Deep Breathing", "url": "https://www.youtube.com/watch?v=odADwWzHR24" },
+      { "title": "10-Minute Gentle Yoga", "url": "https://www.youtube.com/watch?v=v7AYKMP6rOE" },
+      { "title": "Mindful Stretch Routine", "url": "https://www.youtube.com/watch?v=4pKly2JojMw" },
+      { "title": "Guided Relaxation Practice", "url": "https://www.youtube.com/watch?v=inpok4MKVLM" }
+    ],
+    "podcast": [
+      { "title": "Overcoming Tough Days", "url": "https://www.youtube.com/watch?v=2OEL4P1Rz04" },
+      { "title": "Self-Compassion Talk", "url": "https://www.youtube.com/watch?v=IvtZBUSplr4" },
+      { "title": "Healing After Hard Times", "url": "https://www.youtube.com/watch?v=GZp3d6Yp8fM" }
+    ],
+    "video": [
+      { "title": "You Are Stronger Than You Think", "url": "https://www.youtube.com/watch?v=mgmVOuLgFB0" },
+      { "title": "This Too Shall Pass", "url": "https://www.youtube.com/watch?v=ZXsQAXx_ao0" },
+      { "title": "Motivation for Hard Days", "url": "https://www.youtube.com/watch?v=wnHW6o8WMas" }
+    ]
+  },
+
+  "calm": {
+    "music": [
+      { "title": "Relaxing Ambient Sounds", "url": "https://www.youtube.com/watch?v=lFcSrYw-ARY" },
+      { "title": "Deep Focus Lofi", "url": "https://www.youtube.com/watch?v=5qap5aO4i9A" },
+      { "title": "Rain & Thunder Sounds", "url": "https://www.youtube.com/watch?v=eKFTSSKCzWA" },
+      { "title": "Soft Meditation Music", "url": "https://www.youtube.com/watch?v=inpok4MKVLM" },
+      { "title": "Ocean Waves for Relaxation", "url": "https://www.youtube.com/watch?v=V1bFr2SWP1I" }
+    ],
+    "exercise": [
+      { "title": "Box Breathing Technique", "url": "https://www.youtube.com/watch?v=tEmt1Znux58" },
+      { "title": "Guided Meditation 10 Minutes", "url": "https://www.youtube.com/watch?v=ZToicYcHIOU" },
+      { "title": "Stress Relief Stretching", "url": "https://www.youtube.com/watch?v=4pKly2JojMw" }
+    ],
+    "podcast": [
+      { "title": "Managing Anger Mindfully", "url": "https://www.youtube.com/watch?v=8jPQjjsBbIc" },
+      { "title": "Letting Go of Stress", "url": "https://www.youtube.com/watch?v=2OEL4P1Rz04" },
+      { "title": "Calm Mind Strategies", "url": "https://www.youtube.com/watch?v=wnHW6o8WMas" }
+    ],
+    "video": [
+      { "title": "How To Calm Down Fast", "url": "https://www.youtube.com/watch?v=O-6f5wQXSu8" },
+      { "title": "3 Ways To Control Anger", "url": "https://www.youtube.com/watch?v=ZXsQAXx_ao0" },
+      { "title": "Anxiety Relief Techniques", "url": "https://www.youtube.com/watch?v=GZp3d6Yp8fM" }
+    ]
+  },
+
+  "energize": {
+    "music": [
+      { "title": "Feel Good Pop Playlist", "url": "https://www.youtube.com/watch?v=ZbZSe6N_BXs" },
+      { "title": "High Energy Workout Mix", "url": "https://www.youtube.com/watch?v=UBMk30rjy0o" },
+      { "title": "Morning Motivation Music", "url": "https://www.youtube.com/watch?v=wnHW6o8WMas" },
+      { "title": "Upbeat Indie Playlist", "url": "https://www.youtube.com/watch?v=5qap5aO4i9A" }
+    ],
+    "exercise": [
+      { "title": "Quick Morning Energy Boost", "url": "https://www.youtube.com/watch?v=UBMk30rjy0o" },
+      { "title": "10-Minute Cardio Blast", "url": "https://www.youtube.com/watch?v=ml6cT4AZdqI" },
+      { "title": "Power Yoga Flow", "url": "https://www.youtube.com/watch?v=v7AYKMP6rOE" }
+    ],
+    "podcast": [
+      { "title": "Growth Mindset Talks", "url": "https://www.youtube.com/watch?v=vpO8sZDxOGI" },
+      { "title": "Unlock Your Potential", "url": "https://www.youtube.com/watch?v=GZp3d6Yp8fM" },
+      { "title": "Daily Motivation Boost", "url": "https://www.youtube.com/watch?v=wnHW6o8WMas" }
+    ],
+    "video": [
+      { "title": "Inspiring Success Stories", "url": "https://www.youtube.com/watch?v=mgmVOuLgFB0" },
+      { "title": "Believe In Yourself", "url": "https://www.youtube.com/watch?v=ZXsQAXx_ao0" },
+      { "title": "Stay Focused & Win", "url": "https://www.youtube.com/watch?v=wnHW6o8WMas" }
+    ]
+  }
+}
+  
