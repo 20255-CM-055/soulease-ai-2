@@ -1,313 +1,4 @@
 
-# from flask_cors import CORS
-# from flask import Flask, request, jsonify
-# from transformers import pipeline
-# from pymongo import MongoClient
-# from datetime import datetime
-# import json
-# import random
-# import requests
-# import whisper
-# import os
-
-# app = Flask(__name__)
-# CORS(app)
-
-# print("🔥 Starting SoulEase Emotion Server...")
-# print("🔥 Loading Pretrained Emotion Model...")
-
-# # -----------------------------
-# # Emotion Detection Model
-# # -----------------------------
-# emotion_pipeline = pipeline(
-#     "text-classification",
-#     model="j-hartmann/emotion-english-distilroberta-base"
-# )
-
-# print("✅ Emotion Model Loaded Successfully!")
-
-# # -----------------------------
-# # Whisper Speech Model
-# # -----------------------------
-# print("🎤 Loading Whisper Model...")
-# whisper_model = whisper.load_model("base")
-# print("✅ Whisper Model Loaded!")
-
-# # -----------------------------
-# # MongoDB Connection
-# # -----------------------------
-# client = MongoClient("mongodb://127.0.0.1:27017/")
-# db = client["soulease"]
-# journal_collection = db["journal_entries"]
-
-# # -----------------------------
-# # Load Suggestions JSON
-# # -----------------------------
-# with open("suggestions.json", "r") as f:
-#     suggestion_data = json.load(f)
-
-# # -----------------------------
-# # Emotion → Strategy Mapping
-# # -----------------------------
-# emotion_strategy = {
-#     "sadness": "uplift",
-#     "anger": "calm",
-#     "fear": "calm",
-#     "joy": "energize",
-#     "love": "energize",
-#     "surprise": "energize"
-# }
-
-# # -----------------------------
-# # Jamendo API Setup
-# # -----------------------------
-# JAMENDO_CLIENT_ID = "4cae87d6"
-
-# emotion_music_tags = {
-#     "sadness": "piano",
-#     "anger": "ambient",
-#     "fear": "calm",
-#     "joy": "pop",
-#     "love": "acoustic",
-#     "surprise": "chill"
-# }
-
-# # -----------------------------
-# # Podcast Search Terms
-# # -----------------------------
-# podcast_search_terms = {
-#     "sadness": "mental health podcast",
-#     "anger": "calming podcast",
-#     "fear": "anxiety podcast",
-#     "joy": "motivation podcast",
-#     "love": "self love podcast",
-#     "surprise": "mindfulness podcast"
-# }
-
-# # -----------------------------
-# # Fetch Dynamic Music
-# # -----------------------------
-# def fetch_music_from_jamendo(emotion):
-
-#     tag = emotion_music_tags.get(emotion.lower(), "chill")
-
-#     url = f"https://api.jamendo.com/v3.0/tracks/?client_id={JAMENDO_CLIENT_ID}&tags={tag}&limit=3&audioformat=mp32"
-
-#     try:
-
-#         response = requests.get(url).json()
-
-#         music_results = []
-
-#         for track in response.get("results", []):
-
-#             audio_url = track.get("audio")
-
-#             if not audio_url:
-#                 continue
-
-#             music_results.append({
-#                 "id": str(track.get("id")),
-#                 "title": f"{track['name']} - {track['artist_name']}",
-#                 "type": "Music",
-#                 "category": "Music",
-#                 "duration": "3 min",
-#                 "color": "bg-slate-50",
-#                 "sourceUrl": audio_url
-#             })
-
-#         return music_results
-
-#     except Exception as e:
-
-#         print("Jamendo API error:", e)
-#         return []
-
-
-# # -----------------------------
-# # Fetch Podcasts
-# # -----------------------------
-# def fetch_podcasts(emotion):
-
-#     term = podcast_search_terms.get(emotion.lower(), "mindfulness podcast")
-
-#     url = f"https://itunes.apple.com/search?term={term}&media=podcast&limit=3"
-
-#     try:
-
-#         response = requests.get(url).json()
-
-#         podcasts = []
-
-#         for item in response.get("results", []):
-
-#             podcasts.append({
-#                 "id": str(item.get("collectionId")),
-#                 "title": item.get("collectionName"),
-#                 "type": "Podcast",
-#                 "category": "Podcast",
-#                 "duration": "10 min",
-#                 "color": "bg-slate-50",
-#                 "sourceUrl": item.get("trackViewUrl")
-#             })
-
-#         return podcasts
-
-#     except Exception as e:
-
-#         print("Podcast API error:", e)
-#         return []
-
-
-# # -----------------------------
-# # Suggestion Generator
-# # -----------------------------
-# def get_dynamic_suggestions(emotion):
-
-#     strategy = emotion_strategy.get(emotion.lower(), "uplift")
-#     data = suggestion_data.get(strategy, {})
-
-#     results = {}
-
-#     for content_type in data:
-
-#         items = data[content_type]
-
-#         if items:
-#             selected = random.sample(items, min(1, len(items)))
-#             results[content_type] = selected
-#         else:
-#             results[content_type] = []
-
-#     results["explore_more"] = {
-#         "music": f"https://www.youtube.com/results?search_query={strategy}+music",
-#         "exercise": f"https://www.youtube.com/results?search_query={strategy}+exercise",
-#         "podcast": f"https://www.youtube.com/results?search_query={strategy}+podcast",
-#         "video": f"https://www.youtube.com/results?search_query={strategy}+motivational+video"
-#     }
-
-#     return results
-
-
-# # -----------------------------
-# # MAIN PREDICTION ROUTE
-# # -----------------------------
-# @app.route("/predict", methods=["POST"])
-# def predict():
-
-#     data = request.json
-
-#     if not data or "text" not in data:
-#         return jsonify({"error": "Text field is required"}), 400
-
-#     text = data["text"]
-#     user_id = data.get("userId", "demo_user")
-
-#     try:
-
-#         result = emotion_pipeline(text)[0]
-
-#         emotion = result["label"]
-#         confidence = result["score"]
-
-#         dynamic_suggestions = get_dynamic_suggestions(emotion)
-
-#         # Music
-#         jamendo_music = fetch_music_from_jamendo(emotion)
-#         if jamendo_music:
-#             dynamic_suggestions["music"] = jamendo_music
-
-#         # Podcast
-#         podcasts = fetch_podcasts(emotion)
-#         if podcasts:
-#             dynamic_suggestions["podcast"] = podcasts
-
-#         # Save journal
-#         journal_collection.insert_one({
-#             "userId": user_id,
-#             "text": text,
-#             "emotion": emotion,
-#             "confidence": round(confidence * 100, 2),
-#             "timestamp": datetime.utcnow()
-#         })
-
-#         return jsonify({
-#             "emotion": emotion,
-#             "confidence": round(confidence * 100, 2),
-#             "suggestions": dynamic_suggestions
-#         })
-
-#     except Exception as e:
-
-#         print("Prediction error:", e)
-
-#         return jsonify({
-#             "emotion": "neutral",
-#             "confidence": 50,
-#             "suggestions": {}
-#         })
-
-# # -----------------------------
-# # SPEECH TO TEXT ROUTE
-# # -----------------------------
-# @app.route("/speech-to-text", methods=["POST"])
-# def speech_to_text():
-
-#     if "audio" not in request.files:
-#         return jsonify({"error": "Audio file required"}), 400
-
-#     audio_file = request.files["audio"]
-
-#     temp_path = "temp_audio.wav"
-#     audio_file.save(temp_path)
-
-#     try:
-
-#         result = whisper_model.transcribe(temp_path)
-
-#         text = result["text"].strip()
-
-#         os.remove(temp_path)
-
-#         return jsonify({
-#             "text": text
-#         })
-
-#     except Exception as e:
-
-#         print("Whisper error:", e)
-
-#         if os.path.exists(temp_path):
-#             os.remove(temp_path)
-
-#         return jsonify({
-#             "text": ""
-#         })
-
-
-# if __name__ == "__main__":
-
-#     print("🚀 SoulEase Emotion Server Running...")
-
-#     app.run(
-#         host="0.0.0.0",
-#         port=5001,
-#         debug=True,
-#         use_reloader=False
-#     )
-
-# the real-one
-# ------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
 
 
 # from collections import Counter
@@ -329,6 +20,8 @@ import re
 app = Flask(__name__)
 CORS(app)
 
+whisper_model = None
+
 print("🔥 Starting SoulEase Emotion Server...")
 print("🔥 Loading Pretrained Emotion Model...")
 
@@ -347,9 +40,9 @@ print("✅ Emotion Model Loaded Successfully!")
 # -----------------------------
 # Whisper Speech Model
 # -----------------------------
-print("🎤 Loading Whisper Model...")
-whisper_model = whisper.load_model("base")
-print("✅ Whisper Model Loaded!")
+# print("🎤 Loading Whisper Model...")
+# whisper_model = whisper.load_model("base")
+# print("✅ Whisper Model Loaded!")
 
 # -----------------------------
 # MongoDB Connection
@@ -706,6 +399,7 @@ def predict():
 # -----------------------------
 # SPEECH TO TEXT ROUTE
 # -----------------------------
+
 @app.route("/speech-to-text", methods=["POST"])
 def speech_to_text():
 
@@ -713,11 +407,14 @@ def speech_to_text():
         return jsonify({"error": "Audio file required"}), 400
 
     audio_file = request.files["audio"]
-
     temp_path = "temp_audio.wav"
     audio_file.save(temp_path)
 
     try:
+        global whisper_model
+
+        if whisper_model is None:
+            whisper_model = whisper.load_model("tiny")
 
         result = whisper_model.transcribe(temp_path)
 
@@ -730,7 +427,6 @@ def speech_to_text():
         })
 
     except Exception as e:
-
         print("Whisper error:", e)
 
         if os.path.exists(temp_path):
@@ -739,7 +435,7 @@ def speech_to_text():
         return jsonify({
             "text": ""
         })
-
+        
 @app.route("/")
 def home():
     return "AI Server Running 🚀"
